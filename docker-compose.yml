@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  mysql-database:
+    build: ./mysql-database
+    environment:
+      MYSQL_ROOT_PASSWORD: itesm
+      MYSQL_DATABASE: test_database
+    restart: always
+  web-nodejs:
+    build: ./web-nodejs
+    environment:
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: root
+      MYSQL_PASSWORD: itesm
+      MYSQL_HOST: mysql-database
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-database
+    restart: on-failure
